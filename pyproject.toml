@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spec-algorithms"
+version = "1.0.0"
+description = "Graph-guided specification alignment, value representation and path intervention"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "networkx>=3.4",
+    "numpy>=2",
+    "pydantic>=2,<3",
+    "scikit-learn>=1.5",
+]
+
+[project.optional-dependencies]
+mlx = ["mlx-lm==0.31.3", "transformers>=5"]
+
+[project.scripts]
+specalgo = "specalgo.cli:main"
+
+[tool.hatch.build]
+reproducible = true
+include = [
+    "/src/specalgo/**/*.py",
+    "/src/specalgo/_support/scoring/judge_contract_v0_1.txt",
+    "/src/specalgo/_support/scoring/SpecBench_LICENSE",
+]
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/.gitignore",
+    "/README.md",
+    "/pyproject.toml",
+    "/src/specalgo/**/*.py",
+    "/src/specalgo/_support/scoring/judge_contract_v0_1.txt",
+    "/src/specalgo/_support/scoring/SpecBench_LICENSE",
+    "/tests/test_portability.py",
+]
